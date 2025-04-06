@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.id %}Редактирование{% else %}Создание{% endif %} объявления{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-{% if form.instance.id %}pencil{% else %}plus{% endif %}"></i>
+                    {% if form.instance.id %}Редактирование{% else %}Создание{% endif %} объявления
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- Блок для отображения сообщений -->
+                {% if messages %}
+                <div class="alert alert-danger">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Поле заголовка -->
+                    <div class="mb-3">
+                        <label class="form-label">Заголовок*</label>
+                        <input type="text" name="title" class="form-control"
+                               value="{{ form.title.value|default_if_none:'' }}" required>
+                    </div>
+
+                    <!-- Поле описания -->
+                    <div class="mb-3">
+                        <label class="form-label">Описание*</label>
+                        <textarea name="description" class="form-control" rows="3" required>{{ form.description.value|default_if_none:'' }}</textarea>
+                    </div>
+
+                    <!-- Категория и состояние -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Категория*</label>
+                            <select name="category" class="form-select" required>
+                                {% for value, name in form.fields.category.choices %}
+                                <option value="{{ value }}" {% if form.category.value == value %}selected{% endif %}>
+                                    {{ name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Состояние*</label>
+                            <select name="condition" class="form-select" required>
+                                {% for value, name in form.fields.condition.choices %}
+                                <option value="{{ value }}" {% if form.condition.value == value %}selected{% endif %}>
+                                    {{ name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Поле загрузки изображения -->
+                    <div class="mb-3">
+                        <label class="form-label">Изображение товара*</label>
+                        <input type="file" name="image" class="form-control" required>
+                        <small class="text-muted">Пожалуйста, прикрепите фото товара</small>
+                    </div>
+
+                    <!-- Поле URL изображения (опциональное) -->
+                    <div class="mb-3">
+                        <label class="form-label">Изображение (URL)</label>
+                        <input type="url" name="image_url" class="form-control"
+                               value="{{ form.image_url.value|default_if_none:'' }}">
+                    </div>
+
+                    <!-- Кнопки -->
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg"></i> Сохранить
+                        </button>
+                        <a href="{% if form.instance.id %}{% url 'ads:ad-detail' form.instance.id %}{% else %}{% url 'ads:ad-list' %}{% endif %}"
+                           class="btn btn-secondary">
+                            <i class="bi bi-x-lg"></i> Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
