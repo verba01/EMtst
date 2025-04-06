@@ -3,7 +3,7 @@ docker-compose up
 
 Swagger UI: http://localhost:8000/swagger/
 
-API объявлений: http://localhost:8000/api/ads/
+API объявлений(темплейты, они доступны после регистрации): http://localhost:8000/api/ads/
 
 Регистрация: http://localhost:8000/api/register/
 
