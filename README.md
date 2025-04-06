@@ -8,4 +8,4 @@ API объявлений: http://localhost:8000/api/ads/
 Регистрация: http://localhost:8000/api/register/
 
 Админка: http://localhost:8000/admin/# EMtst
-# EMtst
+
