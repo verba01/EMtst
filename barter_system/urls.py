@@ -23,7 +23,7 @@ urlpatterns = [
     path('api/', include('ads.urls')),
 path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    # Swagger/OpenAPI URLs
+   
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0),
             name='schema-json'),
@@ -34,6 +34,6 @@ path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
          schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
 
-    # Стандартный Django logout (опционально)
+   
     path('accounts/logout/', LogoutView.as_view(next_page='/swagger/'), name='logout'),
 ]
